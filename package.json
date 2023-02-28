@@ -2,7 +2,7 @@
   "name": "postgres_crud",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "nodemon": "^2.0.20",
     "postgres": "^3.3.3"
   }
 }
