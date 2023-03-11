@@ -3,7 +3,7 @@ const cors = require('cors');
 const postgres = require('postgres')
 require('dotenv').config()
 const app = express();
-const PORT = process.env.PORT || 4000;  
+const PORT = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
@@ -31,6 +31,13 @@ app.get('/test', async (req, res) => {
     res.json(data)
 })
 
+// app.get('/version', async(req, res) => {
+//     const result = await sql`select version()`
+//     console.log(result);
+//     let data = { 'result': result }
+//     res.json(data)
+// })
+
 // Create a jobrecord
 
 app.post('/jobs', async (req, res) => {
@@ -39,14 +46,31 @@ app.post('/jobs', async (req, res) => {
       into jobs
       (jobtitle,company,region,jobcategory)
       values(
-        ${req.body.jobTitle},
+        ${req.body.jobtitle},
         ${req.body.company},
         ${req.body.region},
-        ${req.body.jobcategory},
-      )`;
+        ${req.body.jobcategory} )`;
     console.log(result)
     let data = { 'results': result };
     res.json(data);
+})
+
+
+
+//Create a new job
+app.post('/jobs', async (req, res) => {
+    const result = await sql`
+      insert into jobs(jobtitle, company, region,jobcategory)
+      value(
+        ${req.body.jobtitle},
+        ${req.body.company},
+        ${req.body.region},
+        ${req.body.jobcategory}
+      )
+    `
+    console.log(result)
+    let data = { 'result': result }
+    res.json(data)
 })
 
 app.get("/jobs", async (req, res) => {
