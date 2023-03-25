@@ -73,7 +73,7 @@ app.post('/jobs', async (req, res) => {
     res.json(data)
 })
 
-app.get("/jobs", async (req, res) => {
+app.get("/jobs/", async (req, res) => {
     const result = await sql`select * from jobs`;
     console.log(result);
     let data = {"result": result};
