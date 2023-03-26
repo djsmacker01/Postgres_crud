@@ -8,7 +8,7 @@ GET http://localhost:4000/jobs
 POST http://localhost:4000/jobs/
 content-type: application/json
 
-{"jobtitle":"Backend","company":"Amazon","region":"Cardiff","jobcategory":"IT"}
+{"jobtitle":"Frontend","company":"Amazon","region":"Cardiff","jobcategory":"IT"}
 
 
 ###
