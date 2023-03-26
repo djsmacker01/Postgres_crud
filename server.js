@@ -67,14 +67,21 @@ app.post('/jobs', async (req, res) => {
         ${req.body.region},
         ${req.body.jobcategory}
       )
-    `
+    ` 
     console.log(result)
     let data = { 'result': result }
     res.json(data)
 })
 
-app.get("/jobs/", async (req, res) => {
+app.get("/jobs", async (req, res) => {
     const result = await sql`select * from jobs`;
+    console.log(result);
+    let data = {"result": result};
+    res.json(data);      
+});
+
+app.get("/jobs/:id", async (req, res) => {
+    const result = await sql`select * from jobs where id = ${req.params.id}`;
     console.log(result);
     let data = {"result": result};
     res.json(data);      
@@ -85,10 +92,10 @@ app.put("/jobs/:id", async (req,res) => {
 	//console.log(req.body);
 	const result = await sql`
 		update jobs 
-		  set jobtitle    = ${req.body.jobTitle},
+		  set jobtitle    = ${req.body.jobtitle},
 		      company     = ${req.body.company},
 			  region      = ${req.body.region},
-			  jobcategory = ${req.body.jobCategory}
+			  jobcategory = ${req.body.jobcategory}
 		  where id=${req.params.id}`;
     console.log(result);
     let data = {"result": result};
@@ -106,4 +113,4 @@ app.delete("/jobs/:id", async (req,res) => {
 
 app.listen(PORT, () => {
     console.log(`Server is running and listening on ${PORT}`);
-});
+});  

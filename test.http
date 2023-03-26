@@ -8,16 +8,16 @@ GET http://localhost:4000/jobs
 POST http://localhost:4000/jobs/
 content-type: application/json
 
-{"jobtitle":"Frontend","company":"Amazon","region":"Cardiff","jobcategory":"IT"}
+{"jobtitle":"Electrical","company":"Amazon","region":"Cardiff","jobcategory":"IT"}
 
 
 ###
 
 
-PUT http://localhost:4000/jobs/1
+PUT http://localhost:4000/jobs/1 
 content-type: application/json
 
-{"jobTitle":"Test Ops","company":"XYZ Ltd","region":"West","jobCategory":"Accounting"}
+{"jobtitle":"Test Ops","company":"XYZ Ltd","region":"West","jobcategory":"Accounting"}
 
 
 ###
