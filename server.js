@@ -58,20 +58,20 @@ app.post('/jobs', async (req, res) => {
 
 
 //Create a new job
-app.post('/jobs', async (req, res) => {
-    const result = await sql`
-      insert into jobs(jobtitle, company, region,jobcategory)
-      value(
-        ${req.body.jobtitle},
-        ${req.body.company},
-        ${req.body.region},
-        ${req.body.jobcategory}
-      )
-    ` 
-    console.log(result)
-    let data = { 'result': result }
-    res.json(data)
-})
+// app.post('/jobs', async (req, res) => {
+//     const result = await sql`
+//       insert into jobs(jobtitle, company, region,jobcategory)
+//       value(
+//         ${req.body.jobtitle},
+//         ${req.body.company},
+//         ${req.body.region},
+//         ${req.body.jobcategory}
+//       )
+//     ` 
+//     console.log(result)
+//     let data = { 'result': result }
+//     res.json(data)
+// })
 
 app.get("/jobs", async (req, res) => {
     const result = await sql`select * from jobs`;
@@ -100,6 +100,36 @@ app.put("/jobs/:id", async (req,res) => {
     console.log(result);
     let data = {"result": result};
     res.json(data);      
+});
+
+app.get('/jobSearch/:searchCateria', async (req, res) => { 
+    const sc = `%${req.params.searchCateria.toLowerCase()}%`;
+    const result = await sql`
+	  select * from jobs 
+	  where (
+		lower(jobtitle) like ${sc} or
+		lower(jobcategory) like ${sc} or
+		lower(region) like ${sc} or
+		lower(company) like ${sc} )`;
+	console.log(result);
+	let data = {result};
+	res.json(data);
+})
+
+// get specific record(s) by search criteria  (READ in CRUD)
+app.get('/jobSearchByField', async (req,res) => {	  
+	let sc = `%${ req.query.criteria.toLowerCase() }%`;		
+	let sf = `${ req.query.field }`;	
+	
+	console.log(`searching for string:${sc} in field:${sf}`);	
+
+	const result = await sql`
+	  select * from jobs 
+	  where lower(${sql(sf)}) like ${sc} `;  // added sql(); see docs https://www.npmjs.com/package/postgres#building-queries
+
+	console.log(result);
+	let data = {result};
+	res.json(data);
 });
 
 
